@@ -65,10 +65,10 @@ var seps   = [undefined, /\t|\n|\r/, '']
         ]
       }
     , four_byte_utf8 :
-      { text          : '{ "U+10ABCD": "í¯ªí¿" }'
+      { text          : '{ "U+10ABCD": "ôŠ¯" }'
       , events        :
         [ ["openobject"  , "U+10ABCD"]
-        , ["value"       , "í¯ªí¿"]
+        , ["value"       , "ôŠ¯"]
         , ["closeobject" , undefined]
         , ['end'         , undefined]
         , ['ready'       , undefined]
@@ -628,6 +628,32 @@ var seps   = [undefined, /\t|\n|\r/, '']
         , ["closeobject" , undefined]
         , ['end'         , undefined]
         , ['ready'       , undefined]
+        ]
+      }
+    , incomplete_json_terminates_ending_in_number :
+      { text    : '[[1,2,3],[4,5'
+      , events  :
+        [ ["openarray"   , undefined]
+        , ["openarray"   , undefined]
+        , ["value"       , 1]
+        , ["value"       , 2]
+        , ["value"       , 3]
+        , ["closearray"  , undefined]
+        , ["openarray"   , undefined]
+        , ["value"       , 4]    
+        , ["error"       , undefined]    
+        ]
+      }
+    , incomplete_json_terminates_ending_in_comma :
+      { text    : '[[1,2,3],'
+      , events  :
+        [ ["openarray"   , undefined]
+        , ["openarray"   , undefined]
+        , ["value"       , 1]
+        , ["value"       , 2]
+        , ["value"       , 3]
+        , ["closearray"  , undefined]
+        , ["error"       , undefined]
         ]
       }
     , json_org  :
